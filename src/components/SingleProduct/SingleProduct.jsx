@@ -1,5 +1,5 @@
 import "./SingleProduct.scss";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import RelatedProducts from "./RelatedProducts/RelatedProducts";
 import {
   FaFacebookF,
@@ -10,6 +10,7 @@ import {
   FaCartPlus,
 } from "react-icons/fa";
 import useFetch from "../../hooks/useFetch";
+import { Context } from "../../utils/context";
 import { useParams } from "react-router-dom";
 const SingleProduct = () => {
   const [quantity, setQuantity] = useState(1);
@@ -17,6 +18,8 @@ const SingleProduct = () => {
   const { data } = useFetch(
     `/api/products?populate=*&[filters][categories][id]=${id}`
   );
+
+  const { handleAddToCart } = useContext(Context);
 
   const increment = () => {
     setQuantity((prevState) => prevState + 1);
@@ -55,7 +58,13 @@ const SingleProduct = () => {
                 <span>{quantity}</span>
                 <span onClick={increment}>+</span>
               </div>
-              <button className="add-to-cart-button">
+              <button
+                className="add-to-cart-button"
+                onClick={() => {
+                  handleAddToCart(data.data[0], quantity);
+                  setQuantity(1);
+                }}
+              >
                 <FaCartPlus size={20} />
                 ADD TO CART
               </button>
