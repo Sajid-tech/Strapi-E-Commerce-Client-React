@@ -1,4 +1,4 @@
-// global method -through we call the data
+// axis is global method -through we call the data
 
 import axios from "axios";
 
