@@ -1,33 +1,34 @@
-import { createContext, useEffect, useState } from "react";
+import { useEffect } from "react";
+import { createContext, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-export const Context = createContext()
+export const Context = createContext();
 
 const AppContext = ({ children }) => {
-
     const [categories, setCategories] = useState();
     const [products, setProducts] = useState();
-    const [cartItems, setCartItems] = useState([])
+    const [showCart, setShowCart] = useState(false);
+    const [cartItems, setCartItems] = useState([]);
     const [cartCount, setCartCount] = useState(0);
     const [cartSubTotal, setCartSubTotal] = useState(0);
     const location = useLocation();
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [location])
+        window.scrollTo(0, 0);
+    }, [location]);
 
     useEffect(() => {
-        let count = 0
-        cartItems.map((item) => (count += item.attributes.quantity));
+        let count = 0;
+        cartItems?.map((item) => (count += item.attributes.quantity));
         setCartCount(count);
 
         let subTotal = 0;
         cartItems.map(
-            (item) => (subTotal += item.attributes.price * item.attributes.quantity));
-        setCartSubTotal(subTotal)
-
-    }, [cartItems])
-
+            (item) =>
+                (subTotal += item.attributes.price * item.attributes.quantity)
+        );
+        setCartSubTotal(subTotal);
+    }, [cartItems]);
 
     const handleAddToCart = (product, quantity) => {
         let items = [...cartItems];
@@ -40,11 +41,13 @@ const AppContext = ({ children }) => {
         }
         setCartItems(items);
     };
+
     const handleRemoveFromCart = (product) => {
         let items = [...cartItems];
         items = items?.filter((p) => p.id !== product?.id);
         setCartItems(items);
     };
+
     const handleCartProductQuantity = (type, product) => {
         let items = [...cartItems];
         let index = items?.findIndex((p) => p.id === product?.id);
@@ -58,25 +61,26 @@ const AppContext = ({ children }) => {
     };
 
     return (
-        <Context.Provider value={{
-            products,
-            setProducts,
-            categories,
-            setCategories,
-            cartItems,
-            setCartItems,
-            cartCount,
-            setCartCount,
-            cartSubTotal,
-            setCartSubTotal,
-            handleAddToCart,
-            handleRemoveFromCart,
-            handleCartProductQuantity,
-
-        }}>
+        <Context.Provider
+            value={{
+                products,
+                setProducts,
+                categories,
+                setCategories,
+                cartItems,
+                setCartItems,
+                handleAddToCart,
+                cartCount,
+                handleRemoveFromCart,
+                showCart,
+                setShowCart,
+                handleCartProductQuantity,
+                cartSubTotal,
+            }}
+        >
             {children}
         </Context.Provider>
-    )
-}
+    );
+};
 
-export default AppContext
+export default AppContext;

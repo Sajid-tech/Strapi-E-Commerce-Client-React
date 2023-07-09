@@ -1,18 +1,14 @@
-import "./Product.scss";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-const Product = ({ id, data }) => {
+import "./Product.scss";
+
+const Product = ({ data, id }) => {
   const navigate = useNavigate();
   return (
-    <div
-      className="product-card"
-      onClick={() => {
-        navigate(`/product/` + id);
-      }}
-    >
+    <div className="product-card" onClick={() => navigate("/product/" + id)}>
       <div className="thumbnail">
         <img
           src={process.env.REACT_APP_DEV_URL + data.img.data[0].attributes.url}
-          alt="products list"
         />
       </div>
       <div className="prod-details">

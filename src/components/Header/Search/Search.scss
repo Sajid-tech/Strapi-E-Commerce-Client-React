@@ -38,7 +38,7 @@
                 color: #212121;
             }
         }
-        svg {
+        .close-btn {
             position: absolute;
             font-size: 25px;
             right: 20px;
@@ -106,7 +106,6 @@
                         white-space: nowrap;
                         overflow: hidden;
                         color: rgba(0, 0, 0, 0.5);
-                        
                     }
                 }
             }
