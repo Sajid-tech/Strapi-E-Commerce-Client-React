@@ -42,12 +42,13 @@ const SingleProduct = () => {
                 process.env.REACT_APP_DEV_URL +
                 product.img.data[0].attributes.url
               }
+              alt=""
             />
           </div>
           <div className="right">
             <span className="name">{product.title}</span>
             <span className="price">&#8377;{product.price}</span>
-            <span className="desc">{product.description}</span>
+            <span className="desc">{product.desc}</span>
 
             <div className="cart-buttons">
               <div className="quantity-buttons">
